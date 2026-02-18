@@ -1,0 +1,17 @@
+$flag = 0
+
+do {
+    $proc = Get-Process -Name notepad -ErrorAction SilentlyContinue
+
+    if ($proc) {
+        Write-Host "Notepad is running"
+        Start-Sleep -Seconds 1
+        $flag = 0
+    }
+    else {
+        $flag = 1
+    }
+
+} until ($flag -eq 1)
+
+Write-Host "Notepad is not running"

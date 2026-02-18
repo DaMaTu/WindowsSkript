@@ -1,0 +1,24 @@
+# Get Desktop path
+$desktop = [Environment]::GetFolderPath("Desktop")
+
+# Import CSV from Desktop
+$students = Import-Csv "$desktop\students.csv"
+
+# Create Name + School table
+$result = $students | Select-Object Name, @{
+    Name = "School"
+    Expression = {
+        if ([int]$_.Age -ge 4 -and [int]$_.Age -le 10) {
+            "Junior"
+        }
+        else {
+            "Senior"
+        }
+    }
+}
+
+# Display output
+$result | Format-Table -AutoSize
+
+# Optional: Export result back to Desktop
+$result | Export-Csv "$desktop\students_with_school.csv" -NoTypeInformation

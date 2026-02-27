@@ -1,0 +1,36 @@
+Write-Host "------ PART 1: Without Parameter ------" -ForegroundColor Cyan
+
+# Function without parameter - Running services
+function countstart {
+    $count = (Get-Service | Where-Object { $_.Status -eq "Running" }).Count
+    Write-Host "Total services in running state = $count"
+}
+
+# Function without parameter - Stopped services
+function countstop {
+    $count = (Get-Service | Where-Object { $_.Status -eq "Stopped" }).Count
+    Write-Host "Total services in stopped state = $count"
+}
+
+# Call functions
+countstart
+countstop
+
+
+Write-Host ""
+Write-Host "------ PART 2: With Parameter ------" -ForegroundColor Cyan
+
+# Function with parameter
+function countservice {
+    param(
+        [ValidateSet("Running","Stopped")]
+        [string]$status
+    )
+
+    $count = (Get-Service | Where-Object { $_.Status -eq $status }).Count
+    Write-Host "Total services in $status state = $count"
+}
+
+# Call function with parameter
+countservice -status Running
+countservice -status Stopped

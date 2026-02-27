@@ -1,0 +1,38 @@
+Write-Host "----- PART 1: Open Notepad and Get Process ID -----" -ForegroundColor Cyan
+
+# Open two Notepad instances
+Start-Process notepad
+Start-Process notepad
+
+Start-Sleep -Seconds 2   # Wait for processes to start
+
+# Display only ProcessName and Id
+Get-Process notepad | Select-Object ProcessName, Id
+
+Write-Host ""
+Write-Host "----- PART 2: Folder and File Operations -----" -ForegroundColor Cyan
+
+# Create Folder C:\Temp\Test
+$folderPath = "C:\Temp\Test"
+
+if (!(Test-Path $folderPath)) {
+    New-Item -Path $folderPath -ItemType Directory | Out-Null
+}
+
+# Create Sample Files (1 CSV + 2 TXT)
+"Name,Age`nJohn,25`nSara,30" | Out-File "$folderPath\SampleFile.csv"
+"Sample text file 1" | Out-File "$folderPath\Notepad1.txt"
+"Sample text file 2" | Out-File "$folderPath\Notepad2.txt"
+
+Write-Host ""
+Write-Host "Total files in folder:" -ForegroundColor Yellow
+
+# Show all files in folder
+
+Write-Host "Size in MB : " ($file.Length / 1MB)Write-Host ""
+Write-Host "FileName : " $file.Name
+Write-Host "Size in KB : " ($file.Length / 1KB)
+
+# Get only CSV file
+$file = Get-ChildItem $folderPath -Filter *.csv
+

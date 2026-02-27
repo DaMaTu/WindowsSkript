@@ -1,0 +1,162 @@
+function Show-MainMenu {
+    Clear-Host
+    Write-Host "Area Calculator" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "Main Menu" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "Please select the option to perform the respective task" -ForegroundColor Yellow
+    Write-Host "1: Area of Square"
+    Write-Host "2: Area of Rectangle"
+    Write-Host "3: Area of Circle"
+    Write-Host "4: Area of Triangle"
+    Write-Host "5: Exit"
+    Write-Host ""
+}
+
+function Next-Option {
+    Write-Host ""
+    Write-Host "Please select the next option" -ForegroundColor Yellow
+    Write-Host "1: Return to Main Menu"
+    Write-Host "2: Exit"
+    $next = Read-Host "Enter your choice"
+
+    switch ($next) {
+        1 { return $true }
+        2 { exit }
+        default {
+            Write-Host "Error correct option" -ForegroundColor Red
+            Start-Sleep 2
+            return Next-Option
+        }
+    }
+}
+
+do {
+    Show-MainMenu
+    $choice = Read-Host "Enter your choice"
+
+    switch ($choice) {
+
+        1 {
+            Clear-Host
+            Write-Host "Area of Square" -ForegroundColor Green
+            [double]$side = Read-Host "Enter the side of the square"
+            $area = $side * $side
+            Write-Host "Area of the square : $area" -ForegroundColor Green
+            $continue = Next-Option
+        }
+
+        2 {
+            Clear-Host
+            Write-Host "Area of Rectangle" -ForegroundColor Green
+            [double]$length = Read-Host "Enter length"
+            [double]$width  = Read-Host "Enter width"
+            $area = $length * $width
+            Write-Host "Area of rectangle : $area" -ForegroundColor Green
+            $continue = Next-Option
+        }
+
+        3 {
+            Clear-Host
+            Write-Host "Area of Circle" -ForegroundColor Green
+            [double]$radius = Read-Host "Enter radius"
+            $area = [math]::PI * $radius * $radius
+            Write-Host "Area of circle : $area" -ForegroundColor Green
+            $continue = Next-Option
+        }
+
+        4 {
+            Clear-Host
+            Write-Host "Area of Triangle" -ForegroundColor Green
+            [double]$base = Read-Host "Enter base"
+            [double]$height = Read-Host "Enter height"
+            $area = 0.5 * $base * $height
+            Write-Host "Area of triangle : $area" -ForegroundColor Green
+            $continue = Next-Option
+        }
+
+        5 { exit }
+
+function Show-MainMenu {
+    Clear-Host
+    Write-Host "Area Calculator" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "Main Menu" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "Please select the option to perform the respective task" -ForegroundColor Yellow
+    Write-Host "1: Area of Square"
+    Write-Host "2: Area of Rectangle"
+    Write-Host "3: Area of Circle"
+    Write-Host "4: Area of Triangle"
+    Write-Host "5: Exit"
+    Write-Host ""
+}
+
+function Next-Option {
+    Write-Host ""
+    Write-Host "Please select the next option" -ForegroundColor Yellow
+    Write-Host "1: Return to Main Menu"
+    Write-Host "2: Exit"
+    $next = Read-Host "Enter your choice"
+
+    switch ($next) {
+        1 { return $true }
+        2 { exit }
+        default {
+            Write-Host "Error correct option" -ForegroundColor Red
+            Start-Sleep 2
+            return Next-Option
+        }
+    }
+}
+
+do {
+    Show-MainMenu
+    $choice = Read-Host "Enter your choice"
+
+    switch ($choice) {
+
+        1 {
+            Clear-Host
+            Write-Host "Area of Square" -ForegroundColor Green
+            [double]$side = Read-Host "Enter the side of the square"
+            $area = $side * $side
+            Write-Host "Area of the square : $area" -ForegroundColor Green
+            Clear-Host
+            Write-Host "Area of circle : $area" -ForegroundColor Green
+            $continue = Next-Option
+        }
+
+        4 {
+            Clear-Host
+            Write-Host "Area of Triangle" -ForegroundColor Green
+            [double]$base = Read-Host "Enter base"
+            [double]$height = Read-Host "Enter height"
+            $area = 0.5 * $base * $height
+            Write-Host "Area of triangle : $area" -ForegroundColor Green
+            $continue = Next-Option
+        }
+
+        5 { exit }
+
+        default {
+            Write-Host "Invalid option! Please try again." -ForegroundColor Red
+
+} while ($true)            Start-Sleep 2
+        }
+    }
+            Write-Host "Area of Circle" -ForegroundColor Green
+            [double]$radius = Read-Host "Enter radius"
+            $area = [math]::PI * $radius * $radius
+            $continue = Next-Option
+        }
+
+        }
+
+        3 {
+            $area = $length * $width
+            Write-Host "Area of rectangle : $area" -ForegroundColor Green
+            $continue = Next-Option
+        2 {
+            Clear-Host
+            Write-Host "Area of Rectangle" -ForegroundColor Green

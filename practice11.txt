@@ -1,0 +1,41 @@
+# Take input from user (decimal type)
+[decimal]$num1 = Read-Host "Enter first number"
+[decimal]$num2 = Read-Host "Enter second number"
+
+Write-Host ""
+Write-Host "Calculator" -ForegroundColor Cyan
+Write-Host "1: Addition"
+Write-Host "2: Subtraction"
+Write-Host "3: Division"
+Write-Host "4: Multiplication"
+
+$choice = Read-Host "Enter your choice"
+
+Write-Host ""
+
+switch ($choice) {
+    1 {
+        $result = $num1 + $num2
+        Write-Host "Sum is : $result" -ForegroundColor Green
+    }
+    2 {
+        $result = $num1 - $num2
+        Write-Host "Difference is : $result" -ForegroundColor Green
+    }
+    3 {
+        if ($num2 -eq 0) {
+            Write-Host "Cannot divide by zero!" -ForegroundColor Red
+        }
+        else {
+            $result = $num1 / $num2
+            Write-Host "Division result is : $result" -ForegroundColor Green
+        }
+    }
+    4 {
+        $result = $num1 * $num2
+        Write-Host "Product is : $result" -ForegroundColor Green
+    }
+    default {
+        Write-Host "Invalid choice!" -ForegroundColor Red
+    }
+}

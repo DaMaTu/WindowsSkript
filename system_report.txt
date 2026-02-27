@@ -1,0 +1,65 @@
+# ---------------------------------------
+# System Report Script
+# ---------------------------------------
+
+# Küsi kasutaja nime
+$name = Read-Host "Sisesta oma nimi"
+
+# Küsi mitu korda tervitust kuvada
+$count = Read-Host "Mitu korda tervitust kuvada?"
+
+# Alusta raporti loomist
+"==========================" | Out-File report.txt
+"SYSTEM REPORT" | Out-File report.txt -Append
+"Kuupäev ja kellaaeg: $(Get-Date -Format 'dd.MM.yyyy HH:mm:ss')" | Out-File report.txt -Append
+"==========================" | Out-File report.txt -Append
+"" | Out-File report.txt -Append
+
+# Tsükkel tervituste kuvamiseks
+for ($i = 1; $i -le [int]$count; $i++) {
+    $greeting = "Tere, $name! ($i)"
+    Write-Host $greeting
+    $greeting | Out-File report.txt -Append
+}
+
+"" | Out-File report.txt -Append
+"--- Süsteemiinfo ---" | Out-File report.txt -Append
+
+# Süsteemiinfo
+"Arvuti nimi: $env:COMPUTERNAME" | Out-File report.txt -Append
+"Sisselogitud kasutaja: $env:USERNAME" | Out-File report.txt -Append
+"PowerShelli versioon: $($PSVersionTable.PSVersion)" | Out-File report.txt -Append
+
+"" | Out-File report.txt -Append
+"--- Töötavad protsessid (3) ---" | Out-File report.txt -Append
+
+# 3 protsessi
+Get-Process | Select-Object -First 3 Name, Id | Out-File report.txt -Append
+
+"" | Out-File report.txt -Append
+"--- Teenused (3) ---" | Out-File report.txt -Append
+
+# 3 teenust
+Get-Service | Select-Object -First 3 Name, Status | Out-File report.txt -Append
+
+"" | Out-File report.txt -Append
+
+# PowerShelli versiooni kontroll
+if ($PSVersionTable.PSVersion.Major -lt 5) {
+    $message = "HOIATUS: PowerShelli versioon on alla 5!"
+} else {
+    $message = "PowerShelli versioon on sobiv."
+}
+
+Write-Host $message
+$message | Out-File report.txt -Append
+
+"" | Out-File report.txt -Append
+"===========================" | Out-File report.txt -Append
+"Script finished successfully" | Out-File report.txt -Append
+"===========================" | Out-File report.txt -Append
+
+# Lõppteade ekraanile
+Write-Host "==========================="
+Write-Host "Script finished successfully"
+Write-Host "==========================="

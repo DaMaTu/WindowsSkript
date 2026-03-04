@@ -1,0 +1,34 @@
+# Küsi kasutajalt ees- ja perenimi
+$firstName = Read-Host "Sisesta kasutaja eesnimi (ladina tähed)"
+$lastName  = Read-Host "Sisesta kasutaja perenimi (ladina tähed)"
+# Kontroll, et nimi sisaldab ainult ladina tähti
+if ($firstName -notmatch '^[a-zA-Z]+$' -or $lastName -notmatch '^[a-zA-Z]+$') {
+    Write-Host "VIGA: Nimi võib sisaldada ainult ladina tähti!" -ForegroundColor Red
+    exit
+}
+# Loo kasutajanimi ees.perenimi (väiketähed)
+$username = ($firstName + "." + $lastName).ToLower()
+$fullName = "$firstName $lastName"
+$description = "Lokaalne kasutaja $fullName"
+# Kontrolli, kas kasutaja juba eksisteerib
+$existingUser = Get-LocalUser -Name $username -ErrorAction SilentlyContinue
+if ($existingUser) {
+    Write-Host "VIGA: Kasutaja '$username' on juba olemas!" -ForegroundColor Red
+    exit
+}
+# Parool
+$password = ConvertTo-SecureString "Parool1!" -AsPlainText -Force
+# Proovi kasutajat luua
+try {
+    New-LocalUser -Name $username `
+                  -Password $password `
+                  -FullName $fullName `
+                  -Description $description `
+                  -ErrorAction Stop
+
+    Write-Host "Kasutaja '$username' loodi edukalt." -ForegroundColor Green
+}
+catch {
+    Write-Host "VIGA: Kasutaja loomine ebaõnnestus!" -ForegroundColor Red
+    Write-Host $_.Exception.Message
+}

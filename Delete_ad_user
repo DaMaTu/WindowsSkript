@@ -1,0 +1,36 @@
+# küsime kasutaja ees- ja perenimi
+$firstname = Read-Host "Please enter user firstname"
+$lastname = Read-Host "Please enter user lastname"
+
+# transliit funktsioon
+function Translit {
+    param([string] $inputString)
+    $Translit = @{
+        [char]'ä' = "a"
+        [char]'õ' = "o"
+        [char]'ü' = "u"
+        [char]'ö' = "o"
+    }
+    $outputString = ""
+    foreach ($character in $inputString.ToCharArray()) {
+        if ($Translit[$character] -cne $Null) {
+            $outputString += $Translit[$character]
+        } else {
+            $outputString += $character
+        }
+    }
+    Write-Output $outputString
+}
+
+# loome kasutajanime (sama loogika nagu loomise skriptis)
+$username = $firstname + "." + $lastname
+$username = $username.ToLower()
+$username = Translit($username)
+
+# proovime kasutaja kustutada
+try {
+    Remove-ADUser -Identity $username -Confirm:$false -ErrorAction Stop
+    Write-Host "User $firstname $lastname is removed succesfully"
+} catch {
+    Write-Host "User not exists or problem is occuring during user removing, please try again"
+}

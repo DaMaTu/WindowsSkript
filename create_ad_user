@@ -1,0 +1,40 @@
+Import-Module ActiveDirectory
+
+# Kasutajate nimekiri (võid lugeda ka failist)
+$users = @(
+    "kadi.tamm",
+    "terje.lepp",
+    "tonis.kokk",
+    "heiki.magi"
+)
+
+foreach ($username in $users) {
+
+    # Kontrolli, kas kasutaja eksisteerib
+    $existingUser = Get-ADUser -Filter "SamAccountName -eq '$username'" -ErrorAction SilentlyContinue
+
+    if ($existingUser) {
+        Write-Host "User $username already exists - can not add this user"
+    }
+    else {
+        try {
+            # Loo kasutaja
+            New-ADUser `
+                -SamAccountName $username `
+                -Name $username `
+                -GivenName ($username.Split('.')[0]) `
+                -Surname ($username.Split('.')[1]) `
+                -Enabled $true `
+                -AccountPassword (ConvertTo-SecureString "P@ssw0rd123" -AsPlainText -Force)
+
+            # Kontroll, kas loomine õnnestus
+            }
+        }
+    }
+}        catch {
+            Write-Host "Error adding user $username : $_"
+        }
+            if ($?) {
+            else {
+                Write-Host "Failed to add user $username"
+

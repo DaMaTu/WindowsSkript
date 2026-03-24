@@ -1,0 +1,35 @@
+# kuupäev faili nimeks PP.MM.YYYY formaadis
+$date = Get-Date -Format "dd.MM.yyyy"
+
+# backup kaust
+$backupRoot = "C:\Backup"
+
+# loo backup kaust kui ei ole olemas
+if (-not (Test-Path $backupRoot)) {
+    New-Item -ItemType Directory -Path $backupRoot
+}
+
+# võta kõik kasutajad süsteemist
+$users = Get-LocalUser | Where-Object { $_.Enabled -eq $true }
+
+foreach ($user in $users) {
+    $username = $user.Name
+    $homeDir = "C:\Users\$username"
+
+    # kontrolli kas kodukataloog on olemas
+    if (Test-Path $homeDir) {
+        $zipName = "$username-$date.zip"
+        $zipPath = "$backupRoot\$zipName"
+
+        try {
+            Compress-Archive -Path $homeDir -DestinationPath $zipPath -Force
+            Write-Host "Varundus loodud: $zipPath"
+        } catch {
+            Write-Host "Viga kasutaja $username varundamisel: $_"
+        }
+    } else {
+        Write-Host "Kasutaja $username kodukataloog ei ole olemas, jätan vahele"
+    }
+}
+
+Write-Host "Varundus on lõpetatud"
